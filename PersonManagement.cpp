@@ -69,6 +69,8 @@ void print_PersonNodes(Person*, Person*);
 
 void populate_Person(string, Person*, Person*, Person*);
 
+void edit_PersonData(Person*);
+
 // End function prototypes
 
 // Driver
@@ -110,6 +112,64 @@ int main() {
 }    
 
 // Function definitions
+
+// Edit Person  Name, Height and Weight for that SSN
+// Parameters: Pointer to head of person struct
+// Returns: Void
+void edit_PersonData(Person* head)
+{
+    Person* current{head};
+    
+    long targetSSN{0};
+    
+    string currentLine;
+    string newdata{""};
+    
+    cin.ignore();
+    
+    std::cout<< "Enter the SSN of the person to be edited: ";
+    getline(cin,currentLine);
+    
+    targetSSN = stol(currentLine);
+    
+    
+    while(current->next != NULL)
+    {
+        if(current->personSSN == targetSSN)
+        {
+            std::cout<< "SSN entered matches " << current->personName << '\n';
+            std::cout<< "Editing commenced. Press 0 to keep original data\n";
+            
+            std::cout<< "Enter new Name: ";    
+            getline(cin,newdata);
+            if(newdata[0] != '0')
+                current->personName = newdata;
+            else
+                std::cout<< "Retaining original data.\n";
+            
+            std::cout<< "Enter new Height: "; 
+            getline(cin,newdata);
+             if(newdata[0] != '0')
+                current->personHeight = stof(newdata);
+            else
+                std::cout<< "Retaining original data.\n";
+           
+            
+            std::cout<< "Enter new Weight: "; 
+            getline(cin,newdata);
+             if(newdata[0] != '0')
+                current->personWeight= stof(newdata);
+            else
+                std::cout<< "Retaining original data.\n";
+           
+        }
+        
+        current = current->next;
+    }
+    
+    std::cout<< "Editing Completed.\n";
+    
+}
 
 // Print person Nodes
 // Parameters: Pointer to head of person struct
@@ -240,7 +300,7 @@ bool menu_loop(bool quit, Person* head, Person* current) {
     cout << "2: Deletion Operation" << endl;
     cout << "3: " << endl;
     cout << "4: " << endl;
-    cout << "5: " << endl;
+    cout << "5: Edit Person Data" << endl;
     cout << "6: " << endl;
     cout << "7: " << endl;
     cout << "8: " << endl;
@@ -265,7 +325,7 @@ bool menu_loop(bool quit, Person* head, Person* current) {
                 cout << "2: Deletion Operation" << endl;
                 cout << "3: " << endl;
                 cout << "4: " << endl;
-                cout << "5: " << endl;
+                cout << "5: Edit Person data" << endl;
                 cout << "6: " << endl;
                 cout << "7: " << endl;
                 cout << "8: " << endl;
@@ -317,7 +377,11 @@ bool menu_loop(bool quit, Person* head, Person* current) {
             
                 cout << "Option 5" << endl;
             
-                head = option_five(head); 
+                print_PersonNodes(head, current);
+                
+                edit_PersonData(head); 
+                
+                print_PersonNodes(head, current);
             
                 break;
         
@@ -468,7 +532,6 @@ Person* option_one(Person* head) {
 Person* option_two(Person* head) {
     
     cout << "Fnct 2" << endl;
-
     return head;
 }
 */
