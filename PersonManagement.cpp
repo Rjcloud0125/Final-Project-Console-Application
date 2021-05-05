@@ -673,7 +673,7 @@ bool menu_loop(bool quit, Person* head) {
             
                 cout << "7: Display all people at high risk for cardiovascular disease." << endl;
             
-                head = option_seven(head);
+                cardiovascularDetermining(head);
             
                 break;
             
@@ -866,7 +866,7 @@ Person* cardiovascularDetermining(Person* head) {
    int person1;
    int BMI;
    
-   
+   get_BMI(BMI);
   while (current->next != NULL)
    {
    
@@ -892,6 +892,7 @@ float get_BMI(Person* head)
 	  
 	  current = current->next;
     }
+	return BMI;
 }
 
 void sort_BMI(Person* head)
