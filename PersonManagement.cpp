@@ -56,11 +56,11 @@ void edit_PersonData(Person*);                      // Option 5
 
 void display_Eligibility(Person*);                  // Option 6
 
-void display_Cardiovascular_Risk (Person *);	// Option 7
+void display_Cardiovascular_Risk (Person *);	    // Option 7
 
-float get_BMI (Person *);	// Gets BMI
+float get_BMI (Person *);                   	    // Gets BMI
 
-void PersonPosition_swap(Person*, Person*);     // Positions person
+void PersonPosition_swap(Person*, Person*);         // Positions person
 Person* option_eight(Person*);
 
 void display_Parents(Person*);                      // Option 9
@@ -788,9 +788,9 @@ bool menu_loop(bool quit, Person* head) {
             
                 cout << "7: Display all people at high risk for cardiovascular disease." << endl;
             
-                 get_BMI(head);
+                 //get_BMI(head);
       
-	  	display_Cardiovascular_Risk(head);
+	  	        display_Cardiovascular_Risk(head);
             
                 break;
             
@@ -989,16 +989,13 @@ void display_Cardiovascular_Risk(Person* head)
     {
         bmi = (((current->personWeight / current->personHeight) / current->personHeight) * 703);
 
-        if(bmi < 27.0)
+        if(bmi > 27.0)
         {
+             PersonPosition_swap(current, current->next);
             break;
         }
         
-        else
-        {
-        PersonPosition_swap(current, current->next);
-        break;
-        }
+       
         
         current = current->next;
     }
