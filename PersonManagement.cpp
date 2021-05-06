@@ -61,7 +61,8 @@ void display_Cardiovascular_Risk (Person *);	    // Option 7
 float get_BMI (Person *);                   	    // Gets BMI
 
 void PersonPosition_swap(Person*, Person*);         // Positions person
-Person* option_eight(Person*);
+
+void femaleMaleRatio(Person* head);                 // Option 8
 
 void display_Parents(Person*);                      // Option 9
 
@@ -72,10 +73,18 @@ Person* option_ten(Person*);
 void display_Siblings(Person*);
 
 Person* option_twelve(Person*);
+
+// File generation
+void gen_file();                                    // create persondata.txt
+void gen_suppFile();                                // create supplement.txt
 // End function prototypes
 
 // Driver
 int main() {
+    
+    // persondata.txt generation
+    //gen_file(); // Comment this out after running once to make the file
+    //gen_suppFile(); // Comment this out after running once to make the file
     
     // Hello
     show_welcomeMsg();
@@ -101,6 +110,8 @@ int main() {
     
     // Initial List Print            
     print_PersonNodes(head);
+    
+    
     
     // Main menu loop
     while (quit == false && cin) {
@@ -685,7 +696,7 @@ bool menu_loop(bool quit, Person* head) {
     cout << "5: Edit Person Data" << endl;
     cout << "6: Display all persons eligible for social security" << endl;
     cout << "7: Display all people at high risk for cardiovascular disease." << endl;
-    cout << "8: " << endl;
+    cout << "8: Display the ratio of females to males." << endl;
     cout << "9: Display the parents of a person" << endl;
     cout << "10: Finds the children of a person " << endl;
     cout << "11: " << endl;
@@ -710,7 +721,7 @@ bool menu_loop(bool quit, Person* head) {
                 cout << "5: Edit Person data" << endl;
                 cout << "6: Display all persons eligible for social security" << endl;
                 cout << "7: Display all people at high risk for cardiovascular disease." << endl;
-                cout << "8: " << endl;
+                cout << "8: Display the ratio of females to males." << endl;
                 cout << "9: Display the parents of a person" << endl;
                 cout << "10: Finds the children of a person " << endl;
                 cout << "11: " << endl;
@@ -796,9 +807,9 @@ bool menu_loop(bool quit, Person* head) {
             
             case 8:
             
-                cout << "Option 8" << endl;
+                cout << "Option 8: Display ratio of females to males." << endl;
             
-                head = option_eight(head);
+                maleFemaleRatio(head);
             
                 break;
             
@@ -1035,34 +1046,33 @@ float get_BMI (Person * head)
   Person* current = head;
 }
 
-// Option 8
+// Calculate and display f:m/1k ratio
 // Parameters: Pointer to head of person struct
-// Returns: Pointer to head of person struct
-Person* option_eight(Person* head) {
+// Returns: Void
+void femaleMaleRatio(Person* head) {
     
-    cout << "Fnct 8" << endl;
+    Person* current = head;
     
-    return head;
-}
+    int maleCount = 0,
+         femaleCount = 0;
+    
+    while (current != NULL) {
+    
+       if (current -> personGender == 'M') {
+            
+            maleCount++;
+            
+        } else {
+       
+            femaleCount++;
+        }
+      
+        current = current -> next; 
+    }
 
-// Option 9
-// Parameters: Pointer to head of person struct
-// Returns: Pointer to head of person struct
-Person* option_nine(Person* head) {
+    float genRatio = ((static_cast<float>(femaleCount)/static_cast<float>(maleCount)) * 1000);
     
-    cout << "Fnct 9" << endl;
-    
-    return head;
-}
-
-// Option 10
-// Parameters: Pointer to head of person struct
-// Returns: Pointer to head of person struct
-Person* option_ten(Person* head) {
-    
-    cout << "Fnct 10" << endl;
-    
-    return head;
+    cout << "The ratio of females to male per thousand is: " << genRatio << endl << endl;
 }
 
 // Option 11
@@ -1091,4 +1101,282 @@ Person* option_twelve(Person* head) {
 void show_goodbyeMsg() {                                                              
 	cout << endl << "Thank you for using the Person Struct Linked List " 
 	     << "Manager!" << endl;
+}
+
+// persondata.txt generator
+void gen_file() {
+    
+    ofstream outFile("persondata.txt");
+        
+    outFile << "Gregory Lennon" << endl;
+    outFile << "4008140130" << endl;
+    outFile << "M" << endl;
+    outFile << "1930/06/11" << endl;
+    outFile << "58.43" << endl;
+    outFile << "148.02" << endl;
+    outFile << "1212288810" << endl;
+    outFile << "8486152371" << endl;
+    outFile << "Lucian Schroeder" << endl;
+    outFile << "9472071038" << endl;
+    outFile << "M" << endl;
+    outFile << "1950/07/14" << endl;
+    outFile << "71.11" << endl;
+    outFile << "186.33" << endl;
+    outFile << "1834506014" << endl;
+    outFile << "8311020265" << endl;
+    outFile << "Charis Wong" << endl;
+    outFile << "8130876020" << endl;
+    outFile << "F" << endl;
+    outFile << "1950/05/27" << endl;
+    outFile << "53.09" << endl;
+    outFile << "126.77" << endl;
+    outFile << "7183804452" << endl;
+    outFile << "6573650338" << endl;
+    outFile << "Marwan Livingston" << endl;
+    outFile << "7032751630" << endl;
+    outFile << "M" << endl;
+    outFile << "1980/08/01" << endl;
+    outFile << "69.05" << endl;
+    outFile << "171.22" << endl;
+    outFile << "1834506014" << endl;
+    outFile << "8311020265" << endl;
+    outFile << "Manraj Perez" << endl;
+    outFile << "8058302380" << endl;
+    outFile << "M" << endl;
+    outFile << "1958/03/17" << endl;
+    outFile << "67.12" << endl;
+    outFile << "144.81" << endl;
+    outFile << "3761880562" << endl;
+    outFile << "5466880215" << endl;
+    outFile << "Eamonn Stanton" << endl;
+    outFile << "8736458682" << endl;
+    outFile << "M" << endl;
+    outFile << "1940/06/08" << endl;
+    outFile << "69.99" << endl;
+    outFile << "150.47" << endl;
+    outFile << "7655288240" << endl;
+    outFile << "2878202873" << endl;
+    outFile << "Ananya Reese" << endl;
+    outFile << "1878446120" << endl;
+    outFile << "F" << endl;
+    outFile << "1968/12/25" << endl;
+    outFile << "57.19" << endl;
+    outFile << "123.45" << endl;
+    outFile << "1212288810" << endl;
+    outFile << "8486152371" << endl;
+    outFile << "Adina Morgan" << endl;
+    outFile << "6435484662" << endl;
+    outFile << "F" << endl;
+    outFile << "1987/03/03" << endl;
+    outFile << "66.66" << endl;
+    outFile << "138.42" << endl;
+    outFile << "3350074578" << endl;
+    outFile << "8702271843" << endl;
+    outFile << "Madeleine Squires" << endl;
+    outFile << "4415121732" << endl;
+    outFile << "F" << endl;
+    outFile << "1960/02/19" << endl;
+    outFile << "60.32" << endl;
+    outFile << "127.05" << endl;
+    outFile << "2371870841" << endl;
+    outFile << "5386088001" << endl;
+    outFile << "Malia Bauer" << endl;
+    outFile << "7810715561" << endl;
+    outFile << "F" << endl;
+    outFile << "1990/07/24" << endl;
+    outFile << "62.76" << endl;
+    outFile << "131.44" << endl;
+    outFile << "7664121403" << endl;
+    outFile << "4065560288" << endl;
+    outFile << "Dwayne McDaniel" << endl;
+    outFile << "2534617327" << endl;
+    outFile << "M" << endl;
+    outFile << "1950/05/10" << endl;
+    outFile << "64.87" << endl;
+    outFile << "159.99" << endl;
+    outFile << "7664121403" << endl;
+    outFile << "4065560288" << endl;
+    outFile << "Cosmo Arnold" << endl;
+    outFile << "7024715632" << endl;
+    outFile << "M" << endl;
+    outFile << "197/10/12" << endl;
+    outFile << "68.53" << endl;
+    outFile << "190.55" << endl;
+    outFile << "5657545551" << endl;
+    outFile << "8824238846" << endl;
+    outFile << "Addison McMahon" << endl;
+    outFile << "3054408150" << endl;
+    outFile << "M" << endl;
+    outFile << "1930/06/11" << endl;
+    outFile << "58.43" << endl;
+    outFile << "148.02" << endl;
+    outFile << "1177562016" << endl;
+    outFile << "1134541068" << endl;
+    outFile << "Albert Key" << endl;
+    outFile << "4737134755" << endl;
+    outFile << "M" << endl;
+    outFile << "1950/07/14" << endl;
+    outFile << "71.11" << endl;
+    outFile << "186.33" << endl;
+    outFile << "4351238762" << endl;
+    outFile << "4453754678" << endl;
+    outFile << "Rosalie Austin" << endl;
+    outFile << "9810808201" << endl;
+    outFile << "F" << endl;
+    outFile << "1950/05/27" << endl;
+    outFile << "53.09" << endl;
+    outFile << "126.77" << endl;
+    outFile << "3567833621" << endl;
+    outFile << "7185667065" << endl;
+    outFile << "Mica Gonzalez" << endl;
+    outFile << "6354421724" << endl;
+    outFile << "M" << endl;
+    outFile << "1980/08/01" << endl;
+    outFile << "69.05" << endl;
+    outFile << "171.22" << endl;
+    outFile << "1861271104" << endl;
+    outFile << "1404582053" << endl;
+    outFile << "Dominic Hayes" << endl;
+    outFile << "1264661044" << endl;
+    outFile << "M" << endl;
+    outFile << "1958/03/17" << endl;
+    outFile << "67.12" << endl;
+    outFile << "144.81" << endl;
+    outFile << "3838401686" << endl;
+    outFile << "2606722830" << endl;
+    outFile << "Xander Iles" << endl;
+    outFile << "5144368560" << endl;
+    outFile << "M" << endl;
+    outFile << "1940/06/08" << endl;
+    outFile << "69.99" << endl;
+    outFile << "150.47" << endl;
+    outFile << "4351238762" << endl;
+    outFile << "6573650338" << endl;
+    outFile << "Priyanka Aguirre" << endl;
+    outFile << "4453754678" << endl;
+    outFile << "F" << endl;
+    outFile << "1968/12/25" << endl;
+    outFile << "57.19" << endl;
+    outFile << "123.45" << endl;
+    outFile << "4351238762" << endl;
+    outFile << "6356177020" << endl;
+    outFile << "Al Pacino" << endl;
+    outFile << "4351238762" << endl;
+    outFile << "M" << endl;
+    outFile << "1940/04/25" << endl;
+    outFile << "63.25" << endl;
+    outFile << "174.35" << endl;
+    outFile << "5884327028" << endl;
+    outFile << "4453754678" << endl;
+    outFile << "Maritza Barker" << endl;
+    outFile << "8486152371" << endl;
+    outFile << "F" << endl;
+    outFile << "1999/01/20" << endl;
+    outFile << "55.44" << endl;
+    outFile << "100.23" << endl;
+    outFile << "5884327028" << endl;
+    outFile << "6685841680" << endl;
+    outFile << "Ivan Good" << endl;
+    outFile << "1212288810" << endl;
+    outFile << "M" << endl;
+    outFile << "1958/10/03" << endl;
+    outFile << "66.11" << endl;
+    outFile << "172.22" << endl;
+    outFile << "5884327028" << endl;
+    outFile << "6685841680" << endl;
+    outFile << "Summer Gordon" << endl;
+    outFile << "8311020265" << endl;
+    outFile << "F" << endl;
+    outFile << "1988/03/19" << endl;
+    outFile << "54.01" << endl;
+    outFile << "160.66" << endl;
+    outFile << "3838401686" << endl;
+    outFile << "2606722830" << endl;
+    outFile << "Lincoln Patterson" << endl;
+    outFile << "1834506014" << endl;
+    outFile << "M" << endl;
+    outFile << "1990/12/12" << endl;
+    outFile << "60.88" << endl;
+    outFile << "123.45" << endl;
+    outFile << "3838401686" << endl;
+    outFile << "2606722830" << endl;
+    outFile << "Jakayla Potter" << endl;
+    outFile << "4065560288" << endl;
+    outFile << "F" << endl;
+    outFile << "1974/10/10" << endl;
+    outFile << "49.99" << endl;
+    outFile << "150.22" << endl;
+    outFile << "3567833621" << endl;
+    outFile << "7185667065" << endl;
+    outFile << "Maverick Roth" << endl;
+    outFile << "7664121403" << endl;
+    outFile << "M" << endl;
+    outFile << "1977/12/13" << endl;
+    outFile << "69.96" << endl;
+    outFile << "169.96" << endl;
+    outFile << "1177562016" << endl;
+    outFile << "1134541068" << endl;
+    outFile << "Lydia Liu" << endl;
+    outFile << "6573650338" << endl;
+    outFile << "F" << endl;
+    outFile << "2001/01/01" << endl;
+    outFile << "60.29" << endl;
+    outFile << "144.44" << endl;
+    outFile << "2371870841" << endl;
+    outFile << "5386088001" << endl;
+    outFile << "Zavier Gillespie" << endl;
+    outFile << "7183804452" << endl;
+    outFile << "M" << endl;
+    outFile << "1995/11/11" << endl;
+    outFile << "55.59" << endl;
+    outFile << "145.67" << endl;
+    outFile << "3761880562" << endl;
+    outFile << "5466880215" << endl;
+}
+
+// supplement.txt generator
+void gen_suppFile() {
+    
+    ofstream outFile("supplement.txt");
+        
+    outFile << "Andy Hunter" << endl;
+    outFile << "5702526454" << endl;
+    outFile << "M" << endl;
+    outFile << "1970/10/12" << endl;
+    outFile << "68.53" << endl;
+    outFile << "190.55" << endl;
+    outFile << "5657545551" << endl;
+    outFile << "8824238846" << endl;
+    outFile << "Meg Salinas" << endl;
+    outFile << "2005418530" << endl;
+    outFile << "F" << endl;
+    outFile << "1987/03/03" << endl;
+    outFile << "66.66" << endl;
+    outFile << "138.42" << endl;
+    outFile << "1861271104" << endl;
+    outFile << "1404582053" << endl;
+    outFile << "Trixie Pace" << endl;
+    outFile << "3860575134" << endl;
+    outFile << "F" << endl;
+    outFile << "1960/02/19" << endl;
+    outFile << "60.32" << endl;
+    outFile << "127.05" << endl;
+    outFile << "1861271104" << endl;
+    outFile << "1404582053" << endl;
+    outFile << "Lacie-Mae Forster" << endl;
+    outFile << "8508104888" << endl;
+    outFile << "F" << endl;
+    outFile << "1990/07/24" << endl;
+    outFile << "62.76" << endl;
+    outFile << "131.44" << endl;
+    outFile << "1834506014" << endl;
+    outFile << "8311020265" << endl;
+    outFile << "Jamaal Saunders" << endl;
+    outFile << "6643503821" << endl;
+    outFile << "M" << endl;
+    outFile << "1950/05/10" << endl;
+    outFile << "64.87" << endl;
+    outFile << "159.99" << endl;
+    outFile << "1861271104" << endl;
+    outFile << "1404582053" << endl;
 }
