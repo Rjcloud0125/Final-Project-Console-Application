@@ -673,7 +673,7 @@ bool menu_loop(bool quit, Person* head) {
             
                 cout << "7: Display all people at high risk for cardiovascular disease." << endl;
             
-                cardiovascularDetermining(head);
+                //cardiovascularDetermining(head);
             
                 break;
             
@@ -861,6 +861,7 @@ Person* add_bulkPerson(Person** head) {
     return *head;
 }
 
+/*
 Person* cardiovascularDetermining(Person* head) {
    Person* current = head;
    int person1;
@@ -877,6 +878,7 @@ Person* cardiovascularDetermining(Person* head) {
         }
    }
 }
+
 
 float get_BMI(Person* head) 
 {
@@ -925,6 +927,7 @@ void sort_BMI(Person* head)
     return;
 }
 
+*/
 // Option 8
 // Parameters: Pointer to head of person struct
 // Returns: Pointer to head of person struct
