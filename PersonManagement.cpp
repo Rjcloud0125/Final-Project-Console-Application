@@ -69,7 +69,7 @@ void display_Children(Person*);                     //Option 10
 
 Person* option_ten(Person*);
 
-Person* display_Siblings(Person*);
+void display_Siblings(Person*);
 
 Person* option_twelve(Person*);
 // End function prototypes
@@ -790,7 +790,7 @@ bool menu_loop(bool quit, Person* head) {
             
                  get_BMI(head);
       
-	  	display_Cardiovascular_Risk (head);
+	  	display_Cardiovascular_Risk(head);
             
                 break;
             
@@ -913,9 +913,6 @@ Person* populate_Person(string fileName) {
     
     current = head;
     
-    cout << head -> personName << endl;
-    cout << current -> personName << endl;
-    
     return head;
 }
 
@@ -978,7 +975,7 @@ Person* add_bulkPerson(Person** head) {
     return *head;
 }
 
-/*
+
 void display_Cardiovascular_Risk(Person* head)
 {
     Person* current{head};
@@ -1039,9 +1036,8 @@ float get_BMI (Person * head)
   Person* person2;
   float bmi;
   Person* current = head;
+}
 
-
-*/
 // Option 8
 // Parameters: Pointer to head of person struct
 // Returns: Pointer to head of person struct
