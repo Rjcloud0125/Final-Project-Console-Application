@@ -816,7 +816,7 @@ bool menu_loop(bool quit, Person* head) {
             
                 cout << "Option 8: Display ratio of females to males." << endl;
             
-               //maleFemaleRatio(head);
+                femaleMaleRatio(head);
             
                 break;
             
