@@ -81,7 +81,7 @@ void gen_suppFile();                                // create supplement.txt
 
 // Driver
 int main() {
-     // ------------// [ IMPORTANT INFORMATION Please Read] \\------------ \\
+     // ------------// [ IMPORTANT INFORMATION Please Read all of this ] \\------------ \\
     
     //          [ persondata.txt generation ]
     //       [ [Run this function at least once] ]
