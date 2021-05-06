@@ -56,12 +56,11 @@ void edit_PersonData(Person*);                      // Option 5
 
 void display_Eligibility(Person*);                  // Option 6
 
-Person* cardiovascularDetermining(Person*);         // Option 7
+void display_Cardiovascular_Risk (Person *);	// Option 7
 
-float get_BMI(Person*);                             // Gets BMI
+float get_BMI (Person *);	// Gets BMI
 
-void sort_BMI(Person*);                             // Sorts BMI
-
+void PersonPosition_swap(Person*, Person*);     // Positions person
 Person* option_eight(Person*);
 
 void display_Parents(Person*);                      // Option 9
@@ -673,7 +672,9 @@ bool menu_loop(bool quit, Person* head) {
             
                 cout << "7: Display all people at high risk for cardiovascular disease." << endl;
             
-                //cardiovascularDetermining(head);
+                 get_BMI(head);
+      
+	  	display_Cardiovascular_Risk (head);
             
                 break;
             
@@ -862,70 +863,67 @@ Person* add_bulkPerson(Person** head) {
 }
 
 /*
-Person* cardiovascularDetermining(Person* head) {
-   Person* current = head;
-   int person1;
-   int BMI;
-   
-   get_BMI(BMI);
-  while (current->next != NULL)
-   {
-   
-   if(BMI >= 27)
-        {
-            cout << current->personName << ": BMI: " << get_BMI(head) << " is at risk for cardiovascular disease." << '\n';
-            current = current->next;
-        }
-   }
-}
-
-
-float get_BMI(Person* head) 
+void display_Cardiovascular_Risk(Person* head)
 {
-    int person1;
-    int BMI;
-    Person* current = head;
+    Person* current{head};
+    Person* temp{NULL};
+    float bmi{0};
+    float maxBMI{0};
+
+    std::cout<< "\nPeople at risk of cardiovascular disease if any: \n";
     
+     for(int count{0}; count < get_nodeCount(head); ++count)
+    {
+        bmi = (((current->personWeight / current->personHeight) / current->personHeight) * 703);
+
+        if(bmi < 27.0)
+        {
+            break;
+        }
+        
+        else
+        {
+        PersonPosition_swap(current, current->next);
+        break;
+        }
+        
+        current = current->next;
+    }
+    
+
+
+    current = head;
+
     while(current->next != NULL)
     {
-     cout << current->personName << " has "
-    	  << ((current->personWeight) * 0.45) / (((current->personHeight) * 0.0254) * ((current->personHeight) * 0.0254))
-	      << " as their BMI." << endl;
-	  
-	  current = current->next;
-    }
-	return BMI;
-}
+        bmi = (((current->personWeight / current->personHeight) / current->personHeight) * 703);
 
-void sort_BMI(Person* head)
-{
-    Person* index = NULL;
-    Person* current = head;
-    Person* tmp = current;
-    get_BMI(head);
-
-    while (current->next = NULL)
-    {
-
-         // Node index will point to node next to current
-        index = current->next;
-
-        while (index != NULL)
+        if( bmi > 27.001 )
         {
-            // if current nod's data is greater then index's node data
-            if (current->data < index->data)
-            {
-                tmp = index->data;
-                current->data = tmp;
-            }
-            index = index->next;
+            std::cout<< current->personName << ": BMI: " << bmi << '\n';
         }
 
         current = current->next;
     }
-
-    return;
+    
+    
+    cout<< endl;
 }
+
+void PersonPosition_swap(Person* person1, Person* person2)
+{
+    Person* temp = person2->next;
+    person2->next = person1;
+    person1->next = temp;
+}
+
+float get_BMI (Person * head)
+{
+  Person* person1;
+  Person* person2;
+  float bmi;
+  Person* current = head;
+
 
 */
 // Option 8
