@@ -68,7 +68,7 @@ void display_Parents(Person*);                      // Option 9
 
 Person* option_ten(Person*);
 
-Person* option_eleven(Person*);
+Person* display_Siblings(Person*);
 
 Person* option_twelve(Person*);
 // End function prototypes
@@ -380,6 +380,55 @@ void display_Eligibility(Person* head)
         
         current = current->next;
     }
+}
+
+void display_Siblings(Person* head)
+{
+    Person* targetPerson{head};
+    Person* current{head};
+    
+    string currentLine{0};
+    long searchSSN{0};
+    
+    cin.ignore();
+    
+    cout << "\nEnter the SSN of a person to find their sibling " << endl;
+    getline(cin,currentLine);
+    
+    searchSSN = stol(currentLine);
+    
+    
+    while(current->next != NULL) // Associate entered SSN with actual person Node
+    {
+        if(searchSSN == current->personSSN)
+        {
+            std::cout<< "\nSSN entered matches " << current->personName << "\n\n";
+            break;
+        }
+             
+        
+        current = current->next;
+    }
+    
+    targetPerson = current;
+    
+    current = head; // Reset to the begining of the person list
+    
+    
+    while(current->next != NULL) // Compare target person's SSN to the SSN of everyone else
+    {
+        if(targetPerson->motherSSN == current->motherSSN && current->personSSN != targetPerson->personSSN || targetPerson->fatherSSN == current->fatherSSN && current->personSSN != targetPerson->personSSN) //Compare to motherSSN & fatherSSN than ensure personSSN does not show in output
+        {
+            std::cout<< "Sibling: " << current->personName << "\n\n";
+            break;
+        }
+        
+        current = current->next;
+    }
+    
+    if(current->next == NULL)
+        std::cout<< "Sibling is not on the list\n\n";
+    
 }
 
 // Edit Person  Name, Height and Weight for that SSN
@@ -705,7 +754,7 @@ bool menu_loop(bool quit, Person* head) {
             
                 cout << "Option 11" << endl;
             
-                head = option_eleven(head);
+                display_Siblings(head);
             
                 break;
             
