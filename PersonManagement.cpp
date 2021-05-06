@@ -80,7 +80,7 @@ void gen_file();                                    // create persondata.txt
 int main() {
     
     // persondata.txt generation
-    //gen_file(); // Comment this out after running once to make the file
+    gen_file(); // Comment this out after running once to make the file
     
     // Hello
     show_welcomeMsg();
