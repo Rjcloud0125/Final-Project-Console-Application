@@ -820,7 +820,7 @@ bool menu_loop(bool quit, Person* head) {
             
             case 11:
             
-                cout << "Option 11" << endl;
+                cout << "Option 11: Display the siblings of a person" << endl;
             
                 display_Siblings(head);
             
