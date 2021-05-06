@@ -66,6 +66,8 @@ Person* option_eight(Person*);
 
 void display_Parents(Person*);                      // Option 9
 
+void display_Children(Person*);                     //Option 10
+
 Person* option_ten(Person*);
 
 Person* option_eleven(Person*);
@@ -215,6 +217,71 @@ void display_Parents(Person* head)
     if(current->next == NULL)
         std::cout<< "Father is not on the list\n\n";
     
+}
+
+// Find the children of a given SSN
+// Parameters: Pointer to head of person struct
+// Returns: Void
+void display_Children(Person* head) //Option 10
+{
+    Person* targetPerson{head};
+    Person* current{head};
+    
+    string currentLine{0};
+    long searchSSN{0};
+    
+    cin.ignore();
+    
+    cout << "\nEnter the SSN of a person to find children. " << endl;
+    getline(cin,currentLine);
+    
+    searchSSN = stol(currentLine);
+    
+    
+    while(current->next != NULL) // Associate entered SSN with actual person Node
+    {
+        if(searchSSN == current->personSSN)
+        {
+            std::cout<< "\nSSN entered matches " << current->personName << "\n\n";
+            break;
+        }
+             
+        current = current->next;
+        
+    }
+    targetPerson = current;
+    
+    current = head; // Reset to the begining of the person list
+    
+    cout<<"The children are: \n";
+    
+    while(current->next != NULL) //Checks if the SSN the user input matches with the SSN of the mothers.
+    {
+        if(targetPerson->personSSN == current->motherSSN)
+        {
+            cout<< current->personName << '\n'; //If true, will print the name of the child(current).
+            
+        }
+        
+        current = current->next;
+    }
+    
+  
+    
+    current = head; // Reset to the begining of the person list
+    
+    while(current->next != NULL) //Checks if the SSN the user input matches with the SSN of the fathers.
+    {
+        if(targetPerson->personSSN == current->fatherSSN)
+        {
+            cout<< current->personName << '\n'; //If true, will print the name of the child(current).
+            
+        }
+        
+        current = current->next;
+    }
+    
+
 }
 
 
@@ -572,7 +639,7 @@ bool menu_loop(bool quit, Person* head) {
     cout << "7: Display all people at high risk for cardiovascular disease." << endl;
     cout << "8: " << endl;
     cout << "9: Display the parents of a person" << endl;
-    cout << "10: " << endl;
+    cout << "10: Finds the children of a person " << endl;
     cout << "11: " << endl;
     cout << "12: " << endl;
          
@@ -597,7 +664,7 @@ bool menu_loop(bool quit, Person* head) {
                 cout << "7: Display all people at high risk for cardiovascular disease." << endl;
                 cout << "8: " << endl;
                 cout << "9: Display the parents of a person" << endl;
-                cout << "10: " << endl;
+                cout << "10: Finds the children of a person " << endl;
                 cout << "11: " << endl;
                 cout << "12: " << endl;
             
@@ -695,9 +762,9 @@ bool menu_loop(bool quit, Person* head) {
             
             case 10:
             
-                cout << "Option 10" << endl;
+                 cout << "Option 10: Display the children of a person" << endl;
             
-                head = option_ten(head);
+                display_Children(head);
             
                 break;
             
