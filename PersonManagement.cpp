@@ -61,7 +61,8 @@ void display_Cardiovascular_Risk (Person *);	    // Option 7
 float get_BMI (Person *);                   	    // Gets BMI
 
 void PersonPosition_swap(Person*, Person*);         // Positions person
-Person* option_eight(Person*);
+
+void femaleMaleRatio(Person* head);                 // Option 8
 
 void display_Parents(Person*);                      // Option 9
 
@@ -73,14 +74,17 @@ void display_Siblings(Person*);
 
 Person* option_twelve(Person*);
 
+// File generation
 void gen_file();                                    // create persondata.txt
+void gen_suppFile();                                // create supplement.txt
 // End function prototypes
 
 // Driver
 int main() {
     
     // persondata.txt generation
-    gen_file(); // Comment this out after running once to make the file
+    //gen_file(); // Comment this out after running once to make the file
+    //gen_suppFile(); // Comment this out after running once to make the file
     
     // Hello
     show_welcomeMsg();
@@ -106,6 +110,8 @@ int main() {
     
     // Initial List Print            
     print_PersonNodes(head);
+    
+    
     
     // Main menu loop
     while (quit == false && cin) {
@@ -690,7 +696,7 @@ bool menu_loop(bool quit, Person* head) {
     cout << "5: Edit Person Data" << endl;
     cout << "6: Display all persons eligible for social security" << endl;
     cout << "7: Display all people at high risk for cardiovascular disease." << endl;
-    cout << "8: " << endl;
+    cout << "8: Display the ratio of females to males." << endl;
     cout << "9: Display the parents of a person" << endl;
     cout << "10: Finds the children of a person " << endl;
     cout << "11: " << endl;
@@ -715,7 +721,7 @@ bool menu_loop(bool quit, Person* head) {
                 cout << "5: Edit Person data" << endl;
                 cout << "6: Display all persons eligible for social security" << endl;
                 cout << "7: Display all people at high risk for cardiovascular disease." << endl;
-                cout << "8: " << endl;
+                cout << "8: Display the ratio of females to males." << endl;
                 cout << "9: Display the parents of a person" << endl;
                 cout << "10: Finds the children of a person " << endl;
                 cout << "11: " << endl;
@@ -801,9 +807,9 @@ bool menu_loop(bool quit, Person* head) {
             
             case 8:
             
-                cout << "Option 8" << endl;
+                cout << "Option 8: Display ratio of females to males." << endl;
             
-                head = option_eight(head);
+                maleFemaleRatio(head);
             
                 break;
             
@@ -1040,34 +1046,33 @@ float get_BMI (Person * head)
   Person* current = head;
 }
 
-// Option 8
+// Calculate and display f:m/1k ratio
 // Parameters: Pointer to head of person struct
-// Returns: Pointer to head of person struct
-Person* option_eight(Person* head) {
+// Returns: Void
+void femaleMaleRatio(Person* head) {
     
-    cout << "Fnct 8" << endl;
+    Person* current = head;
     
-    return head;
-}
+    int maleCount = 0,
+         femaleCount = 0;
+    
+    while (current != NULL) {
+    
+       if (current -> personGender == 'M') {
+            
+            maleCount++;
+            
+        } else {
+       
+            femaleCount++;
+        }
+      
+        current = current -> next; 
+    }
 
-// Option 9
-// Parameters: Pointer to head of person struct
-// Returns: Pointer to head of person struct
-Person* option_nine(Person* head) {
+    float genRatio = ((static_cast<float>(femaleCount)/static_cast<float>(maleCount)) * 1000);
     
-    cout << "Fnct 9" << endl;
-    
-    return head;
-}
-
-// Option 10
-// Parameters: Pointer to head of person struct
-// Returns: Pointer to head of person struct
-Person* option_ten(Person* head) {
-    
-    cout << "Fnct 10" << endl;
-    
-    return head;
+    cout << "The ratio of females to male per thousand is: " << genRatio << endl << endl;
 }
 
 // Option 11
@@ -1327,4 +1332,51 @@ void gen_file() {
     outFile << "145.67" << endl;
     outFile << "3761880562" << endl;
     outFile << "5466880215" << endl;
+}
+
+// supplement.txt generator
+void gen_suppFile() {
+    
+    ofstream outFile("supplement.txt");
+        
+    outFile << "Andy Hunter" << endl;
+    outFile << "5702526454" << endl;
+    outFile << "M" << endl;
+    outFile << "1970/10/12" << endl;
+    outFile << "68.53" << endl;
+    outFile << "190.55" << endl;
+    outFile << "5657545551" << endl;
+    outFile << "8824238846" << endl;
+    outFile << "Meg Salinas" << endl;
+    outFile << "2005418530" << endl;
+    outFile << "F" << endl;
+    outFile << "1987/03/03" << endl;
+    outFile << "66.66" << endl;
+    outFile << "138.42" << endl;
+    outFile << "1861271104" << endl;
+    outFile << "1404582053" << endl;
+    outFile << "Trixie Pace" << endl;
+    outFile << "3860575134" << endl;
+    outFile << "F" << endl;
+    outFile << "1960/02/19" << endl;
+    outFile << "60.32" << endl;
+    outFile << "127.05" << endl;
+    outFile << "1861271104" << endl;
+    outFile << "1404582053" << endl;
+    outFile << "Lacie-Mae Forster" << endl;
+    outFile << "8508104888" << endl;
+    outFile << "F" << endl;
+    outFile << "1990/07/24" << endl;
+    outFile << "62.76" << endl;
+    outFile << "131.44" << endl;
+    outFile << "1834506014" << endl;
+    outFile << "8311020265" << endl;
+    outFile << "Jamaal Saunders" << endl;
+    outFile << "6643503821" << endl;
+    outFile << "M" << endl;
+    outFile << "1950/05/10" << endl;
+    outFile << "64.87" << endl;
+    outFile << "159.99" << endl;
+    outFile << "1861271104" << endl;
+    outFile << "1404582053" << endl;
 }
