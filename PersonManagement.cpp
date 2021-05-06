@@ -81,11 +81,18 @@ void gen_suppFile();                                // create supplement.txt
 
 // Driver
 int main() {
+    // ------------// [ IMPORTANT INFORMATION ] \\------------ \\
     
-    // persondata.txt generation
-    //gen_file(); // Comment this out after running once to make the file
-    //gen_suppFile(); // Comment this out after running once to make the file
+    //          [ persondata.txt generation ]
+   // gen_file(); return 0; // Comment this out after running once to make the file
+   
+    //            [ supplement.txt generation ]
+    //gen_suppFile();  return 0; // Comment this out after running once to make the file
     
+    // P.S make sure you remove the extra line generated (last line) in each file. If you don't you will get an error.
+    
+    // ------------// [ IMPORTANT INFORMATION ] \\------------ \\
+        
     // Hello
     show_welcomeMsg();
     
@@ -809,7 +816,7 @@ bool menu_loop(bool quit, Person* head) {
             
                 cout << "Option 8: Display ratio of females to males." << endl;
             
-                maleFemaleRatio(head);
+               //maleFemaleRatio(head);
             
                 break;
             
