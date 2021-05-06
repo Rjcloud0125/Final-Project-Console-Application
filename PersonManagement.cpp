@@ -81,17 +81,17 @@ void gen_suppFile();                                // create supplement.txt
 
 // Driver
 int main() {
-    // ------------// [ IMPORTANT INFORMATION ] \\------------ \\
+     // ------------// [ IMPORTANT INFORMATION Please Read] \\------------ \\
     
     //          [ persondata.txt generation ]
-   // gen_file(); return 0; // Comment this out after running once to make the file
+    //       [ [Run this function at least once] ]
+    // gen_file(); return 0; // Comment this out after running once to make the file
    
     //            [ supplement.txt generation ]
     //gen_suppFile();  return 0; // Comment this out after running once to make the file
     
     // P.S make sure you remove the extra line generated (last line) in each file. If you don't you will get an error.
     
-    // ------------// [ IMPORTANT INFORMATION ] \\------------ \\
         
     // Hello
     show_welcomeMsg();
