@@ -58,6 +58,8 @@ void display_Eligibility(Person*);                  // Option 6
 
 void display_Cardiovascular_Risk (Person *);	    // Option 7
 
+float get_BMI (Person *);                   	    // Gets BMI
+
 void PersonPosition_swap(Person*, Person*);         // Positions person
 
 void femaleMaleRatio(Person* head);                 // Option 8
@@ -72,8 +74,6 @@ void display_Siblings(Person*);
 
 Person* option_twelve(Person*);
 
-void sort_BMI(struct Person**);
-
 // File generation
 void gen_file();                                    // create persondata.txt
 void gen_suppFile();                                // create supplement.txt
@@ -81,11 +81,18 @@ void gen_suppFile();                                // create supplement.txt
 
 // Driver
 int main() {
+     // ------------// [ IMPORTANT INFORMATION Please Read all of this ] \\------------ \\
     
-    // persondata.txt generation
-    //gen_file(); // Comment this out after running once to make the file
-    //gen_suppFile(); // Comment this out after running once to make the file
+    //          [ persondata.txt generation ]
+    //       [ [Run this function at least once] ]
+    //gen_file(); return 0; // Comment this out after running once to make the file
+   
+    //            [ supplement.txt generation ]
+    //gen_suppFile();  return 0; // Comment this out after running once to make the file
     
+    // P.S make sure you remove the extra line generated (last line) in each file. If you don't you will get an error.
+    
+        
     // Hello
     show_welcomeMsg();
     
@@ -128,41 +135,8 @@ int main() {
 // Function definitions
 
 
-// Sort w/ bubblesort -- recursive call to swap_Person
-// Parameters: Person* Reference
-// Returns: Void
-void sort_BMI(struct Person** head) {
-    
-    struct Person** headPointer;
-    
-    int PersonCount = get_nodeCount(*head);
-    
-    float bmiOne = 0.00,
-          bmiTwo = 0.00;
-    
-    for (int i = 0; i <= PersonCount; i++) {
-        
-        headPointer = head;
-        
-        for (int j = 0; j < (PersonCount - i - 1); j++) {
-            
-            struct Person* nodeOne = *headPointer;
-            
-            struct Person* nodeTwo = nodeOne -> next;
-            
-            bmiOne = (((nodeOne->personWeight / nodeOne->personHeight) / nodeOne->personHeight) * 703);
-            
-            bmiTwo = (((nodeTwo->personWeight / nodeTwo->personHeight) / nodeTwo->personHeight) * 703);
-            
-            if (bmiOne > bmiTwo) {
-                
-                *headPointer = swap_Person(nodeOne, nodeTwo);
-            }
-            
-            headPointer = &(*headPointer) -> next;
-        }
-    }
-}
+
+
 
 // Utility function to get person count
 // Parameters: Person* (head)
@@ -327,7 +301,10 @@ void display_Children(Person* head) //Option 10
         
         current = current->next;
     }
+    
+
 }
+
 
 // Instantiate new person from user input and insert into sorted list
 // Parameters: Person** (reference pointer to head)
@@ -497,6 +474,7 @@ void display_Siblings(Person* head)
 {
     Person* targetPerson{head};
     Person* current{head};
+    Person* targetDOB{head};
     
     string currentLine{0};
     long searchSSN{0};
@@ -525,22 +503,31 @@ void display_Siblings(Person* head)
     
     current = head; // Reset to the begining of the person list
     
+    int tempDOB;
     
     while(current->next != NULL) // Compare target person's SSN to the SSN of everyone else
     {
-        if(targetPerson->motherSSN == current->motherSSN && current->personSSN != targetPerson->personSSN || targetPerson->fatherSSN == current->fatherSSN && current->personSSN != targetPerson->personSSN) //Compare to motherSSN & fatherSSN than ensure personSSN does not show in output
+       
+        if( (targetPerson->motherSSN == current->motherSSN) && (current->personSSN != targetPerson->personSSN) || (targetPerson->fatherSSN == current->fatherSSN) && (current->personSSN != targetPerson->personSSN))
         {
-            std::cout<< "Sibling: " << current->personName << "\n\n";
-            break;
+           targetDOB=current;
+           
+           if( 2021 - stoi(targetDOB->personDOB.substr(0,4)) > (2021 - stoi(targetDOB->next->personDOB.substr(0,4))))// compare the data of the nodes 
+           {
+            
+              
+              targetDOB->personDOB = targetDOB->next->personDOB;// swap the data
+              
+            
+            }
+              std::cout<< "Sibling: " << current->personName << " | " << targetDOB->personDOB << "\n\n";
+              targetDOB = targetDOB -> next;
+           }
+          current = current->next;
         }
-        
-        current = current->next;
     }
-    
-    if(current->next == NULL)
-        std::cout<< "Sibling is not on the list\n\n";
-    
-}
+        
+   
 
 // Edit Person  Name, Height and Weight for that SSN
 // Parameters: Pointer to head of person struct
@@ -733,8 +720,8 @@ bool menu_loop(bool quit, Person* head) {
     cout << "8: Display the ratio of females to males." << endl;
     cout << "9: Display the parents of a person" << endl;
     cout << "10: Finds the children of a person " << endl;
-    cout << "11: " << endl;
-    cout << "12: " << endl;
+    cout << "11: Display the siblings of a person " << endl;
+    cout << "12: Display all uncles, aunts, cousins, nephews and nieces of a person" << endl;
          
     while (cin && dontQuitMenu == true) {
         
@@ -758,8 +745,8 @@ bool menu_loop(bool quit, Person* head) {
                 cout << "8: Display the ratio of females to males." << endl;
                 cout << "9: Display the parents of a person" << endl;
                 cout << "10: Finds the children of a person " << endl;
-                cout << "11: " << endl;
-                cout << "12: " << endl;
+                cout << "11: Display the siblings of a person " << endl;
+                cout << "12: Display all uncles, aunts, cousins, nephews and nieces of a person" << endl;
             
                 break;
             
@@ -832,9 +819,11 @@ bool menu_loop(bool quit, Person* head) {
             case 7:
             
                 cout << "7: Display all people at high risk for cardiovascular disease." << endl;
-                
+            
+                 //get_BMI(head);
+      
 	  	        display_Cardiovascular_Risk(head);
-                
+            
                 break;
             
             case 8:
@@ -871,9 +860,9 @@ bool menu_loop(bool quit, Person* head) {
             
             case 12:
             
-                cout << "Option 12" << endl;
+                cout << "Display all uncles, aunts, cousins, nephews and nieces of a person" << endl;
             
-                //head = option_twelve(head);
+                head = option_twelve(head);
             
                 break;
 
@@ -1034,8 +1023,7 @@ void display_Cardiovascular_Risk(Person* head)
 
         if(bmi > 27.0)
         {
-            sort_BMI(&head);
-
+             PersonPosition_swap(current, current->next);
             break;
         }
         
@@ -1048,7 +1036,7 @@ void display_Cardiovascular_Risk(Person* head)
 
     current = head;
 
-    while(current != NULL)
+    while(current->next != NULL)
     {
         bmi = (((current->personWeight / current->personHeight) / current->personHeight) * 703);
 
@@ -1108,6 +1096,17 @@ void femaleMaleRatio(Person* head) {
     cout << "The ratio of females to male per thousand is: " << genRatio << endl << endl;
 }
 
+
+// Option 12
+// Parameters: Pointer to head of person struct
+// Returns: Pointer to head of person struct
+Person* option_twelve(Person* head) {
+    
+    cout << "Fnct 12" << endl;
+    
+    return head;
+}
+
 // Goodbye
 // Parameters: None
 // Returns: Void
@@ -1125,7 +1124,7 @@ void gen_file() {
     outFile << "4008140130" << endl;
     outFile << "M" << endl;
     outFile << "1930/06/11" << endl;
-    outFile << "59.43" << endl;
+    outFile << "58.43" << endl;
     outFile << "148.02" << endl;
     outFile << "1212288810" << endl;
     outFile << "8486152371" << endl;
@@ -1141,7 +1140,7 @@ void gen_file() {
     outFile << "8130876020" << endl;
     outFile << "F" << endl;
     outFile << "1950/05/27" << endl;
-    outFile << "52.09" << endl;
+    outFile << "53.09" << endl;
     outFile << "126.77" << endl;
     outFile << "7183804452" << endl;
     outFile << "6573650338" << endl;
