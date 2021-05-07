@@ -1,5 +1,5 @@
 /******************************************************************************
-05/05/21
+05/06/21
 *******************************************************************************/
 #include <iostream>
 #include <string>
@@ -58,8 +58,6 @@ void display_Eligibility(Person*);                  // Option 6
 
 void display_Cardiovascular_Risk (Person *);	    // Option 7
 
-float get_BMI (Person *);                   	    // Gets BMI
-
 void PersonPosition_swap(Person*, Person*);         // Positions person
 
 void femaleMaleRatio(Person* head);                 // Option 8
@@ -74,6 +72,8 @@ void display_Siblings(Person*);
 
 Person* option_twelve(Person*);
 
+void sort_BMI(struct Person**);
+
 // File generation
 void gen_file();                                    // create persondata.txt
 void gen_suppFile();                                // create supplement.txt
@@ -81,18 +81,11 @@ void gen_suppFile();                                // create supplement.txt
 
 // Driver
 int main() {
-     // ------------// [ IMPORTANT INFORMATION Please Read all of this ] \\------------ \\
     
-    //          [ persondata.txt generation ]
-    //       [ [Run this function at least once] ]
-    // gen_file(); return 0; // Comment this out after running once to make the file
-   
-    //            [ supplement.txt generation ]
-    //gen_suppFile();  return 0; // Comment this out after running once to make the file
+    // persondata.txt generation
+    //gen_file(); // Comment this out after running once to make the file
+    //gen_suppFile(); // Comment this out after running once to make the file
     
-    // P.S make sure you remove the extra line generated (last line) in each file. If you don't you will get an error.
-    
-        
     // Hello
     show_welcomeMsg();
     
@@ -133,6 +126,43 @@ int main() {
 }    
 
 // Function definitions
+
+
+// Sort w/ bubblesort -- recursive call to swap_Person
+// Parameters: Person* Reference
+// Returns: Void
+void sort_BMI(struct Person** head) {
+    
+    struct Person** headPointer;
+    
+    int PersonCount = get_nodeCount(*head);
+    
+    float bmiOne = 0.00,
+          bmiTwo = 0.00;
+    
+    for (int i = 0; i <= PersonCount; i++) {
+        
+        headPointer = head;
+        
+        for (int j = 0; j < (PersonCount - i - 1); j++) {
+            
+            struct Person* nodeOne = *headPointer;
+            
+            struct Person* nodeTwo = nodeOne -> next;
+            
+            bmiOne = (((nodeOne->personWeight / nodeOne->personHeight) / nodeOne->personHeight) * 703);
+            
+            bmiTwo = (((nodeTwo->personWeight / nodeTwo->personHeight) / nodeTwo->personHeight) * 703);
+            
+            if (bmiOne > bmiTwo) {
+                
+                *headPointer = swap_Person(nodeOne, nodeTwo);
+            }
+            
+            headPointer = &(*headPointer) -> next;
+        }
+    }
+}
 
 // Utility function to get person count
 // Parameters: Person* (head)
@@ -297,10 +327,7 @@ void display_Children(Person* head) //Option 10
         
         current = current->next;
     }
-    
-
 }
-
 
 // Instantiate new person from user input and insert into sorted list
 // Parameters: Person** (reference pointer to head)
@@ -805,11 +832,9 @@ bool menu_loop(bool quit, Person* head) {
             case 7:
             
                 cout << "7: Display all people at high risk for cardiovascular disease." << endl;
-            
-                 //get_BMI(head);
-      
+                
 	  	        display_Cardiovascular_Risk(head);
-            
+                
                 break;
             
             case 8:
@@ -848,7 +873,7 @@ bool menu_loop(bool quit, Person* head) {
             
                 cout << "Option 12" << endl;
             
-                head = option_twelve(head);
+                //head = option_twelve(head);
             
                 break;
 
@@ -1009,7 +1034,8 @@ void display_Cardiovascular_Risk(Person* head)
 
         if(bmi > 27.0)
         {
-             PersonPosition_swap(current, current->next);
+            sort_BMI(&head);
+
             break;
         }
         
@@ -1022,7 +1048,7 @@ void display_Cardiovascular_Risk(Person* head)
 
     current = head;
 
-    while(current->next != NULL)
+    while(current != NULL)
     {
         bmi = (((current->personWeight / current->personHeight) / current->personHeight) * 703);
 
@@ -1082,26 +1108,6 @@ void femaleMaleRatio(Person* head) {
     cout << "The ratio of females to male per thousand is: " << genRatio << endl << endl;
 }
 
-// Option 11
-// Parameters: Pointer to head of person struct
-// Returns: Pointer to head of person struct
-Person* option_eleven(Person* head) {
-    
-    cout << "Fnct 11" << endl;
-    
-    return head;
-}
-
-// Option 12
-// Parameters: Pointer to head of person struct
-// Returns: Pointer to head of person struct
-Person* option_twelve(Person* head) {
-    
-    cout << "Fnct 12" << endl;
-    
-    return head;
-}
-
 // Goodbye
 // Parameters: None
 // Returns: Void
@@ -1119,7 +1125,7 @@ void gen_file() {
     outFile << "4008140130" << endl;
     outFile << "M" << endl;
     outFile << "1930/06/11" << endl;
-    outFile << "58.43" << endl;
+    outFile << "59.43" << endl;
     outFile << "148.02" << endl;
     outFile << "1212288810" << endl;
     outFile << "8486152371" << endl;
@@ -1135,7 +1141,7 @@ void gen_file() {
     outFile << "8130876020" << endl;
     outFile << "F" << endl;
     outFile << "1950/05/27" << endl;
-    outFile << "53.09" << endl;
+    outFile << "52.09" << endl;
     outFile << "126.77" << endl;
     outFile << "7183804452" << endl;
     outFile << "6573650338" << endl;
